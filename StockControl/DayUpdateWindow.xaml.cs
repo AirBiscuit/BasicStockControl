@@ -15,23 +15,6 @@ using Newtonsoft.Json;
 
 namespace StockControl
 {
-    public class GridEntry
-    {
-        string itemName;
-        DateTime date;
-        int quantity;
-        public string ItemName { get => itemName; set => itemName = value; }
-        public DateTime Date { get => date; set => date = value; }
-        public int Quantity { get => quantity; set => quantity = value; }
-
-        public GridEntry(string name, DateTime date, int amount)
-        {
-            ItemName = name;
-            Date = date;
-            Quantity = amount;
-        }
-    }
-
     /// <summary>
     /// Interaction logic for DayUpdateWindow.xaml
     /// </summary>
@@ -99,12 +82,24 @@ namespace StockControl
                 if (!dates.Contains(item.Date))
                     dates.Add(item.Date);
             }
+            List<GridEntry> dayUpdate;
             foreach (DateTime date in dates)
             {
-
+                string directory = string.Format("{0}\\{1}\\{2}", main.folderPath, date.Year, date.Month);
+                string file = string.Format("{0}\\{1}{2}", directory, date.Day, ".json");
+                Directory.CreateDirectory(directory);
+                dayUpdate = new List<GridEntry>();
+                for (int i = 0; i < Entries.Count; i++)
+                {
+                    if (Entries[i].Date == date)
+                    {
+                        dayUpdate.Add(Entries[i]);
+                    }
+                }
+                string outputJSON = JsonConvert.SerializeObject(dayUpdate, Formatting.Indented);
+                if (!string.IsNullOrEmpty(outputJSON))
+                    File.WriteAllText(file, outputJSON);
             }
-            string outputJSON = JsonConvert.SerializeObject(Entries, Formatting.Indented);
-            File.WriteAllText(main.filePath, outputJSON);
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
