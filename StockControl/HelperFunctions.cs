@@ -66,7 +66,7 @@ namespace StockControl
         /// </summary>
         /// <param name="backupFilePath">The path of the .stockout file to read the backup from</param>
         /// <returns></returns>
-        public static Backup Restore(string backupFilePath)
+        public static Backup Restore(string backupFilePath, string rootDirectory)
         {
             string plainText;
             List<Item> i = new List<Item>();
@@ -80,6 +80,9 @@ namespace StockControl
                 d = JsonConvert.DeserializeObject<List<GridEntry>>(lists[1]);
                 b.Items = i;
                 b.DayUpdates = d;
+                SaveRestoredDayUpdates(d, rootDirectory);
+                string itemsJSON = JsonConvert.SerializeObject(b.Items, Formatting.Indented);
+                File.WriteAllText(rootDirectory + "Items.json", itemsJSON);
             }
             return b;
         }
@@ -87,6 +90,7 @@ namespace StockControl
         {
             //Save all the days into seperate files
             //Directory by year, month
+            Directory.Delete(rootDirectory, true);
 
             List<DateTime> dates = new List<DateTime>();
             foreach (GridEntry item in entries)

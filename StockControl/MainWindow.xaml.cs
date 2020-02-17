@@ -160,7 +160,7 @@ namespace StockControl
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
-                var newLists = HelperFunctions.Restore(dlg.FileName);
+                var newLists = HelperFunctions.Restore(dlg.FileName, folderPath);
                 ItemsList = new ObservableCollection<Item>(newLists.Items);
                 if (ItemsList.Count > 1)
                     SaveItemsList();
