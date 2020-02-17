@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockControl"
         mc:Ignorable="d"
+        Icon="Icon.ico"
         Title="St Brendan's Stock Control" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
