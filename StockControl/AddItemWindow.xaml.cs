@@ -17,7 +17,7 @@ namespace StockControl
     /// </summary>
     public partial class AddItemWindow : Window
     {
-        string[] Colourlist;
+        readonly string[] Colourlist;
         public AddItemWindow()
         {
             InitializeComponent();

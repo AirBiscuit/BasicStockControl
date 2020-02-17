@@ -21,7 +21,7 @@ namespace StockControl
     public partial class DayUpdateWindow : Window
     {
         public ObservableCollection<GridEntry> Entries;
-        MainWindow main;
+        readonly MainWindow main;
         public DayUpdateWindow()
         {
             InitializeComponent();

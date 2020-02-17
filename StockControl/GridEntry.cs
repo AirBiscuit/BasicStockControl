@@ -19,5 +19,9 @@ namespace StockControl
             Date = date;
             Quantity = amount;
         }
+        public override string ToString()
+        {
+            return ItemName;
+        }
     }
 }

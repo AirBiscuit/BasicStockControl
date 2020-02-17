@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.Win32;
 
 namespace StockControl
 {
@@ -63,16 +64,6 @@ namespace StockControl
         }
         List<Item> LoadItemList()
         {
-            //TODO: Delete this testing code
-            //currentItem = new Item("Toilet Roll", Color.White, 1, 27, "Western Hygiene", "Tork");
-            //ItemsList.Add(currentItem);
-            //currentItem = new Item("J Cloths", Color.Blue, 10, 50, "Aldi", "Power Force");
-            //ItemsList.Add(currentItem);
-            //currentItem = new Item("Taski Sani", Color.Red, 1, 4, "MG Hygiene", "Diversy", "1.5L");
-            //ItemsList.Add(currentItem);
-            //currentItem = new Item("White bin bags", "Lidl", "Purio");
-            //ItemsList.Add(currentItem);
-
             string plainText;
             List<Item> i = new List<Item>();
             if (File.Exists(filePath))
@@ -143,7 +134,40 @@ namespace StockControl
             UpdateAttributes();
             btnEditItem.IsEnabled = true;
         }
-        private void menuSave_Click(object sender, RoutedEventArgs e)
+
+        private void MenuBackup_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.FileName = string.Format("StBrendansBackup {0}-{1}-{2}", DateTime.Today.Day, DateTime.Today.Month, DateTime.Today.Year);
+            saveFile.Filter = "Stockout Backup Files (.stockout)|*.stockout";
+            saveFile.DefaultExt = ".stockout";
+            string backupFileName = null;
+            bool? result = saveFile.ShowDialog();
+            if (result == true)
+            {
+                backupFileName = saveFile.FileName;
+                HelperFunctions.Backup(folderPath, filePath, backupFileName);
+            }
+        }
+
+        private void MenuRestore_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Open .stockout backup file";
+            dlg.Filter = "Stockout Backup Files (.stockout)|*.stockout";
+            dlg.DefaultExt = ".stockout";
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            bool? result = dlg.ShowDialog();
+            if (result == true)
+            {
+                var newLists = HelperFunctions.Restore(dlg.FileName);
+                ItemsList = new ObservableCollection<Item>(newLists.Items);
+                if (ItemsList.Count > 1)
+                    SaveItemsList();
+            }
+        }
+
+        private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
             SaveItemsList();
         }

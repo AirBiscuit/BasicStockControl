@@ -19,9 +19,9 @@
 
         <Menu Grid.ColumnSpan="2">
             <MenuItem Header="_File">
-                <MenuItem Header="_Save..." Name="menuSave" Click="menuSave_Click"/>
-                <MenuItem Header="_Back up data"/>
-                <MenuItem Header="_Restore data"/>
+                <MenuItem Header="_Save..." Name="menuSave" Click="MenuSave_Click"/>
+                <MenuItem Header="_Back up data" Name="MenuBackup" Click="MenuBackup_Click"/>
+                <MenuItem Header="_Restore data" Name="MenuRestore" Click="MenuRestore_Click"/>
             </MenuItem>
             <MenuItem Header="_New">
                 <MenuItem Header="_New Day Update"/>
