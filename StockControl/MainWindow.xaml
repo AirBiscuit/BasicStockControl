@@ -1,0 +1,54 @@
+﻿<Window x:Class="StockControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockControl"
+        mc:Ignorable="d"
+        Title="St Brendan's Stock Control" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save..." Name="menuSave" Click="menuSave_Click"/>
+                <MenuItem Header="_Back up data"/>
+                <MenuItem Header="_Restore data"/>
+            </MenuItem>
+            <MenuItem Header="_New">
+                <MenuItem Header="_New Day Update"/>
+                <MenuItem Header="_New Item" Click="BtnAddNewItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Edit existing item"/>
+                <MenuItem Header="Edit day update"/>
+            </MenuItem>
+        </Menu>
+
+        <DockPanel Grid.Row="1" Margin="10,5">
+            <Button x:Name="btnAddNewItem" Click="BtnAddNewItem_Click" Content="New Item" Margin="0,0,5,0" Padding="10,0" FontSize="16" DockPanel.Dock="Left"/>
+            <Button x:Name="btnEditItem" Click="BtnEditItem_Click" Content="Edit Item" Margin="5,0,0,0" Padding="10,0" FontSize="16" DockPanel.Dock="Right" IsEnabled="False"/>
+        </DockPanel>
+
+        <Button x:Name="btnDayUpdate" Content="Update Stock Levels" Click="BtnDayUpdate_Click" Grid.Column="1" Grid.Row="1" Margin="10,5" FontSize="16"/>
+        <DataGrid x:Name="lstItems" Grid.Row="2" Grid.Column="1" CanUserAddRows="False" HeadersVisibility="Column" Margin="10" ItemsSource="{Binding }" AutoGenerateColumns="False" SelectionChanged="LstItems_SelectionChanged" FontSize="16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="15*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="12*" Header="Supplier" Binding="{Binding Supplier}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="12*" Header="Manufacturer" Binding="{Binding Manufacturer}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="5*" Header="Quantity" Binding="{Binding Quantity}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<ListView x:Name="lstItems" x:FieldModifier="public" Grid.Row="2" Grid.Column="1" Margin="10" ItemsSource="{Binding }" SelectionChanged="LstItems_SelectionChanged" FontSize="16"/>-->
+        <ListView x:Name="lstAttributes" Grid.Row="2" Margin="10" FontSize="16"/>
+
+    </Grid>
+</Window>

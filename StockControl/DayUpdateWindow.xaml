@@ -1,0 +1,43 @@
+﻿<Window x:Class="StockControl.DayUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockControl"
+        mc:Ignorable="d"
+        Title="DayUpdateWindow" Height="550" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Margin="30" Grid.RowSpan="2">
+            <Calendar x:Name="calendar" SelectionMode="SingleDate" SelectedDatesChanged="calendar_SelectedDatesChanged" Margin="0,5"/>
+            <ComboBox x:Name="cboxItemName" FontSize="20" Margin="0,5"/>
+            <DockPanel Margin="0,5">
+                <TextBlock Text="Quantity" Margin="0,0,10,0" FontSize="20" DockPanel.Dock="Left"/>
+                <TextBox x:Name="txtQuantity"  FontSize="20" DockPanel.Dock="Right" GotFocus="TxtQuantity_GotFocus" GotMouseCapture="txtQuantity_GotMouseCapture"/>
+            </DockPanel>
+            <ComboBox x:Name="cboxIncoming" Margin="0,5" FontSize="20" SelectedIndex="0">
+                <ComboBoxItem>Outgoing</ComboBoxItem>
+                <ComboBoxItem>Incoming</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="btnAddUpdate" Margin="0,5" Content="Add to list" Padding="5" FontSize="20" Click="btnAddUpdate_Click"/>
+
+        </StackPanel>
+        <DataGrid Grid.Column="1" Margin="0,30,30,10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*"/>
+                <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="3*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="BtnFinish" Grid.Row="1" Grid.Column="1" Margin="0,5,30,10" Content="Finish Update" FontSize="20" Click="BtnFinish_Click"/>
+
+    </Grid>
+</Window>
