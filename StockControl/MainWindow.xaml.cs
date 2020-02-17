@@ -37,7 +37,6 @@ namespace StockControl
             lstItems.DataContext = ItemsList;
             lstItems.Columns[0].SortDirection = System.ComponentModel.ListSortDirection.Ascending;
         }
-
         private void SetPaths()
         {
             folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\StBrendansStock";
@@ -104,6 +103,21 @@ namespace StockControl
             File.WriteAllText(filePath, outputJSON);
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+        /// <summary>
+        /// Add or subtract the specified amount from the item at a specific position in the list.
+        /// </summary>
+        /// <param name="index">Position in the list</param>
+        /// <param name="quantityChange">Amount to add or remove the selected item's quantity</param>
+        public void UpdateQuantity(int index, int quantityChange)
+        {
+            ItemsList[index].Quantity += quantityChange;
+            RefreshList();
+        }
+        void RefreshList()
+        {
+            lstItems.ItemsSource = null;
+            lstItems.ItemsSource = ItemsList;
+        }
         private void BtnAddNewItem_Click(object sender, RoutedEventArgs e)
         {
             //Open the new item UI
@@ -129,7 +143,6 @@ namespace StockControl
             UpdateAttributes();
             btnEditItem.IsEnabled = true;
         }
-
         private void menuSave_Click(object sender, RoutedEventArgs e)
         {
             SaveItemsList();

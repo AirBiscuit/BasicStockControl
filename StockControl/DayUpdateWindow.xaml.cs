@@ -38,9 +38,9 @@ namespace StockControl
 
 
             //TEST DATA
-            Entries.Add(new GridEntry("Toilet Roll", DateTime.Today, 5));
-            Entries.Add(new GridEntry("Window Cleaner", DateTime.Today, 5));
-            Entries.Add(new GridEntry("Blue Roll", DateTime.Today, 5));
+            //Entries.Add(new GridEntry("Toilet Roll", DateTime.Today, 5));
+            //Entries.Add(new GridEntry("Window Cleaner", DateTime.Today, 5));
+            //Entries.Add(new GridEntry("Blue Roll", DateTime.Today, 5));
         }
 
         private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -74,6 +74,8 @@ namespace StockControl
 
         private void BtnFinish_Click(object sender, RoutedEventArgs e)
         {
+            //Update the quantites in MainWindow's items list.
+
             //Save all the days into seperate files
             //Directory by year, month
             List<DateTime> dates = new List<DateTime>();
@@ -81,6 +83,7 @@ namespace StockControl
             {
                 if (!dates.Contains(item.Date))
                     dates.Add(item.Date);
+                main.UpdateQuantity(cboxItemName.SelectedIndex, item.Quantity);
             }
             List<GridEntry> dayUpdate;
             foreach (DateTime date in dates)
@@ -92,9 +95,7 @@ namespace StockControl
                 for (int i = 0; i < Entries.Count; i++)
                 {
                     if (Entries[i].Date == date)
-                    {
                         dayUpdate.Add(Entries[i]);
-                    }
                 }
                 string outputJSON = JsonConvert.SerializeObject(dayUpdate, Formatting.Indented);
                 if (!string.IsNullOrEmpty(outputJSON))
