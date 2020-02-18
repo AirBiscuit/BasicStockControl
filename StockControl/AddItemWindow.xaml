@@ -48,8 +48,9 @@
             <CheckBox x:Name="chkConsumable" Content="Consumable" VerticalContentAlignment="Center" FontSize="25" Margin="10,0"/>
             <CheckBox x:Name="chkMedical" Content="Medical" VerticalContentAlignment="Center" FontSize="25" Margin="10,0"/>
         </WrapPanel>
-       
 
+        <Button x:Name="btnDelete" Click="BtnDelete_Click" Content="Delete Item" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Margin="10" FontSize="20" Padding="30,0"/>
+        
         <StackPanel Orientation="Horizontal" Margin="20,10" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Button x:Name="btnCancel" Click="BtnCancel_Click" Content="Cancel" FontSize="20" Margin="10,0" Padding="30,0"/>
             <Button x:Name="btnAdd" Click="BtnAdd_Click" Content="Add Item" FontSize="20" Margin="10,0,0,0" Padding="30,0"/>

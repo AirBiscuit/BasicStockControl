@@ -18,6 +18,8 @@ namespace StockControl
     public partial class AddItemWindow : Window
     {
         readonly string[] Colourlist;
+        bool isEdit = false;
+        MainWindow main;
         public AddItemWindow()
         {
             InitializeComponent();
@@ -25,9 +27,13 @@ namespace StockControl
             foreach (string c in Colourlist)
                 cboxColours.Items.Add(c);
             cboxColours.SelectedIndex = 0;
+            btnDelete.IsEnabled = isEdit;
+            main = Application.Current.MainWindow as MainWindow;
         }
         public void OpenWithItemSelected(Item selection)
         {
+            isEdit = true;
+            btnDelete.IsEnabled = isEdit;
             btnAdd.Content = "Finish Editing";
             txtName.Text = selection.Name;
             txtQuantity.Text = selection.Quantity.ToString();
@@ -65,7 +71,7 @@ namespace StockControl
             int.TryParse(txtCapacity.Text, out int cap);
             Item thisItem = new Item(txtName.Text, Color.FromName(cboxColours.SelectedItem.ToString()), cap, quan,
                                      categories, txtSupplier.Text, txtManufacturer.Text, txtVolume.Text);
-            MainWindow main = Application.Current.MainWindow as MainWindow;
+            
             if (isEdit)
                 main.ItemsList[main.lstItems.SelectedIndex] = thisItem;
             else main.ItemsList.Add(thisItem);
@@ -87,11 +93,24 @@ namespace StockControl
             txtCapacity.SelectAll();
         }
 
-        private void TxtQuantity_GotFocus(object sender, MouseEventArgs e)
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            //Validate that the proper item is still selected and hasn't been changed
+            //Compare the name of the item to the selectedItem in main's itemlist
+            var mainSelection = main.lstItems.SelectedItem as Item;
+            if (mainSelection.Name == txtName.Text)
+            {
+                //If lstItems on main has been sorted, the underlying datasource remains unsorted, so selectedindex won't work.
+                main.ItemsList.Remove(mainSelection);
+                main.RefreshList();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("This item has been changed, cannot delete", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //Disabling the button might be a bit harsh, but who knows what else the user has changed at this point. Easiest for them to start again
+                btnDelete.IsEnabled = false;
+            }
         }
-
-
     }
 }

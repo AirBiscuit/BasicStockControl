@@ -104,7 +104,7 @@ namespace StockControl
             ItemsList[index].Quantity += quantityChange;
             RefreshList();
         }
-        void RefreshList()
+        public void RefreshList()
         {
             lstItems.ItemsSource = null;
             lstItems.ItemsSource = ItemsList;
@@ -137,11 +137,13 @@ namespace StockControl
 
         private void MenuBackup_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.FileName = string.Format("StBrendansBackup {0}-{1}-{2}", DateTime.Today.Day, DateTime.Today.Month, DateTime.Today.Year);
-            saveFile.Filter = "Stockout Backup Files (.stockout)|*.stockout";
-            saveFile.DefaultExt = ".stockout";
-            string backupFileName = null;
+            SaveFileDialog saveFile = new SaveFileDialog
+            {
+                FileName = string.Format("StBrendansBackup {0}-{1}-{2}", DateTime.Today.Day, DateTime.Today.Month, DateTime.Today.Year),
+                Filter = "Stockout Backup Files (.stockout)|*.stockout",
+                DefaultExt = ".stockout"
+            };
+            string backupFileName;
             bool? result = saveFile.ShowDialog();
             if (result == true)
             {
@@ -152,11 +154,13 @@ namespace StockControl
 
         private void MenuRestore_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Open .stockout backup file";
-            dlg.Filter = "Stockout Backup Files (.stockout)|*.stockout";
-            dlg.DefaultExt = ".stockout";
-            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Title = "Open .stockout backup file",
+                Filter = "Stockout Backup Files (.stockout)|*.stockout",
+                DefaultExt = ".stockout",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
