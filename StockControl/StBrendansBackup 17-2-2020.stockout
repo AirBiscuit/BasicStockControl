@@ -1,0 +1,605 @@
+[
+  {
+    "Name": "Air Freshener",
+    "Supplier": "Aldi",
+    "Manufacturer": "Scentcerity",
+    "Volume": "250ml",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 15,
+    "Colour": "Red",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Bleach",
+    "Supplier": "Aldi",
+    "Manufacturer": "Power Force",
+    "Volume": "2l",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 7,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Furniture Polish",
+    "Supplier": "Aldi",
+    "Manufacturer": "Power Force",
+    "Volume": "250ml",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 11,
+    "Colour": "Orange",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "J Cloths",
+    "Supplier": "Aldi",
+    "Manufacturer": "Power Force",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 10,
+    "Quantity": 26,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Toilet Gel",
+    "Supplier": "Aldi",
+    "Manufacturer": "Power Force",
+    "Volume": "1L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 10,
+    "Colour": "Transparent",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Window Cleaner",
+    "Supplier": "Aldi",
+    "Manufacturer": "Power Force",
+    "Volume": "750ml",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 3,
+    "Colour": "Green",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Bibs",
+    "Supplier": "Homecare Medical",
+    "Manufacturer": "Homecare Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 4,
+    "Quantity": 12,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Gloves Medium",
+    "Supplier": "Homecare Medical",
+    "Manufacturer": "Homecare Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 100,
+    "Quantity": 50,
+    "Colour": "Red",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": true,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Gloves Large",
+    "Supplier": "Homecare Medical",
+    "Manufacturer": "Homecare Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 100,
+    "Quantity": 41,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": true,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Gloves Extra Large",
+    "Supplier": "Homecare Medical",
+    "Manufacturer": "Homecare Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 100,
+    "Quantity": 49,
+    "Colour": "Green",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": true,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Wet Wipes",
+    "Supplier": "Homecare Medical",
+    "Manufacturer": "Homecare Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 200,
+    "Quantity": 12,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "D Batteries",
+    "Supplier": "Ille",
+    "Manufacturer": "Ille",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 20,
+    "Quantity": 60,
+    "Colour": "'Grey'",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": true
+    }
+  },
+  {
+    "Name": "White Roll",
+    "Supplier": "Ille",
+    "Manufacturer": "Ille",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 6,
+    "Quantity": 32,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Clinical Waste Bags",
+    "Supplier": "Initial Medical",
+    "Manufacturer": "Initial Medical",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 25,
+    "Quantity": 19,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": true,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Black bin bags",
+    "Supplier": "Lidl",
+    "Manufacturer": "Purio",
+    "Volume": "90L",
+    "Ean": null,
+    "Capacity": 20,
+    "Quantity": 13,
+    "Colour": "Black",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": true
+    }
+  },
+  {
+    "Name": "Cable Ties",
+    "Supplier": "Lidl",
+    "Manufacturer": "Parkside",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 251,
+    "Quantity": 7,
+    "Colour": "Black",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": true
+    }
+  },
+  {
+    "Name": "Fabric Softener",
+    "Supplier": "Lidl",
+    "Manufacturer": "Doussy",
+    "Volume": "2L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 3,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": false,
+      "IsLaundry": true,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Scrub Sponges",
+    "Supplier": "Lidl",
+    "Manufacturer": "W5",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 6,
+    "Quantity": 2,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Stain Remover",
+    "Supplier": "Lidl",
+    "Manufacturer": "Formil",
+    "Volume": "1Kg",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 5,
+    "Colour": "Pink",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": false,
+      "IsLaundry": true,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "White Bin Bags",
+    "Supplier": "Lidl",
+    "Manufacturer": "Purio",
+    "Volume": "50L",
+    "Ean": null,
+    "Capacity": 20,
+    "Quantity": 25,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Jontec",
+    "Supplier": "MG Hygiene",
+    "Manufacturer": "Diversey Taski",
+    "Volume": "1.4L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 0,
+    "Colour": "Green",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Sani",
+    "Supplier": "MG Hygiene",
+    "Manufacturer": "Diversey Taski",
+    "Volume": "1.4L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 2,
+    "Colour": "Red",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Sprint",
+    "Supplier": "MG Hygiene",
+    "Manufacturer": "Diversey Taski",
+    "Volume": "1.4L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 3,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Disinfectant Wipes",
+    "Supplier": "Medguard",
+    "Manufacturer": "Sani-cloth",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 225,
+    "Quantity": 5,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": true,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Air Freshener (Automatic)",
+    "Supplier": "Oliver Kelleher",
+    "Manufacturer": "DirectImports",
+    "Volume": "300ml",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 3,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Blue Roll",
+    "Supplier": "Oliver Kelleher",
+    "Manufacturer": "Oliver Kelleher",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 6,
+    "Quantity": 12,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Disposable Cups",
+    "Supplier": "Oliver Kelleher",
+    "Manufacturer": "",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 2000,
+    "Quantity": 1,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": true
+    }
+  },
+  {
+    "Name": "J Cloths (Bathroom)",
+    "Supplier": "Oliver Kelleher",
+    "Manufacturer": "Ramon Contract",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 50,
+    "Quantity": 2,
+    "Colour": "Red",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Carpet Cleaner",
+    "Supplier": "Tesco",
+    "Manufacturer": "",
+    "Volume": "400ml",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 2,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Conditioner",
+    "Supplier": "The Hair & Beauty Company",
+    "Manufacturer": "Hair Care Products",
+    "Volume": "5L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 4,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Shampoo",
+    "Supplier": "The Hair & Beauty Company",
+    "Manufacturer": "Truzone",
+    "Volume": "5L",
+    "Ean": null,
+    "Capacity": 1,
+    "Quantity": 1,
+    "Colour": "Yellow",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Hair and Body soap",
+    "Supplier": "Western Hygiene",
+    "Manufacturer": "Tork",
+    "Volume": "1L",
+    "Ean": null,
+    "Capacity": 6,
+    "Quantity": 22,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Liquid Soap",
+    "Supplier": "Western Hygiene",
+    "Manufacturer": "Tork",
+    "Volume": "1L",
+    "Ean": null,
+    "Capacity": 6,
+    "Quantity": 21,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Toilet Roll",
+    "Supplier": "Western Hygiene",
+    "Manufacturer": "Tork",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 0,
+    "Quantity": 15,
+    "Colour": "White",
+    "Categories": {
+      "IsSanitary": true,
+      "IsCleaning": false,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  },
+  {
+    "Name": "Blue Bags",
+    "Supplier": "Zeus Packaging",
+    "Manufacturer": "Zeus Packaging",
+    "Volume": "",
+    "Ean": null,
+    "Capacity": 200,
+    "Quantity": 57,
+    "Colour": "Blue",
+    "Categories": {
+      "IsSanitary": false,
+      "IsCleaning": true,
+      "IsLaundry": false,
+      "IsMedical": false,
+      "IsConsumable": false
+    }
+  }
+]
+®
+[
+  {
+    "ItemName": "J Cloths",
+    "Date": "2020-02-17T00:00:00+00:00",
+    "Quantity": -8
+  }
+]
