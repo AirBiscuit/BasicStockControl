@@ -44,9 +44,11 @@ namespace StockControl
             Directory.CreateDirectory(folderPath);
             filePath = folderPath + "\\Items.json";
         }
+        /// <summary>
+        /// Refresh the attributes pane with the selected Item's details
+        /// </summary>
         void UpdateAttributes()
         {
-            //Change the attributes pane to the currently selected item's details.
             lstAttributes.Items.Clear();
             int selection = lstItems.SelectedIndex;
             if (selection == -1)
@@ -62,6 +64,10 @@ namespace StockControl
                 lstAttributes.Items.Add("Categories: " + cats);
             else lstAttributes.Items.Add("Categories: None");
         }
+        /// <summary>
+        /// Load the items saved in Items.json into a C# List
+        /// </summary>
+        /// <returns></returns>
         List<Item> LoadItemList()
         {
             string plainText;
@@ -71,25 +77,13 @@ namespace StockControl
                 plainText = File.ReadAllText(filePath);
                 i = JsonConvert.DeserializeObject<List<Item>>(plainText);
             }
-            /* * * * * * * * * * * * * * * * * * * * * * * * 
-             * Try the default destination
-             * If not found, show a file selection dialog
-             * Option A): Open streamreader, iterate and add each item to i
-             * Option B): Use native JSON storage, open JSON file, add to i
-             * * * * * * * * * * * * * * * * * * * * * * * */
             return i;
         }
+        /// <summary>
+        /// Save the current list of items into Items.json
+        /// </summary>
         void SaveItemsList()
         {
-            /*
-            
-            Show file selection dialog
-            Create a streamwriter
-            Iterate through the list
-            Write to the stream
-            Close the stream.
-
-            */
             string outputJSON = JsonConvert.SerializeObject(ItemsList, Formatting.Indented);
             File.WriteAllText(filePath, outputJSON);
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -97,17 +91,32 @@ namespace StockControl
         /// <summary>
         /// Add or subtract the specified amount from the item at a specific position in the list.
         /// </summary>
-        /// <param name="index">Position in the list</param>
-        /// <param name="quantityChange">Amount to add or remove the selected item's quantity</param>
-        public void UpdateQuantity(int index, int quantityChange)
+        /// <param name="Index">Position in the list</param>
+        /// <param name="QuantityChange">Amount to add or remove the selected item's quantity</param>
+        public void UpdateQuantity(int Index, int QuantityChange)
         {
-            ItemsList[index].Quantity += quantityChange;
+            /*
+             * Warning: If the DataGridView has been sorted, index would likely refer to the wrong place in the list.
+             * Workaround: The combobox on DayUpdateWindow explicitly uses ItemsList as its datasource, so sorting on main 
+             * won't affect ItemsList's order. The indices *should* be correct.
+             */
+            ItemsList[Index].Quantity += QuantityChange;
+            RefreshList();
+        }
+        public void UpdateQuantity(GridEntry ChangedItem, int QuantityChange)
+        {
+            ItemsList.First(x => x.Name == ChangedItem.ItemName).Quantity += QuantityChange;
             RefreshList();
         }
         public void RefreshList()
         {
             lstItems.ItemsSource = null;
             lstItems.ItemsSource = ItemsList;
+        }
+        void SetEditButtons(bool enabled)
+        {
+            btnEditItem.IsEnabled = enabled;
+            hdrEditItem.IsEnabled = enabled;
         }
         private void BtnAddNewItem_Click(object sender, RoutedEventArgs e)
         {
@@ -119,9 +128,13 @@ namespace StockControl
         {
             //If there's an item selected, open the edit window with it as the context
             //Otherwise just open the edit window.
-            var ItemWindow = new AddItemWindow();
-            ItemWindow.Show();
-            ItemWindow.OpenWithItemSelected(currentItem);
+            if (lstItems.SelectedIndex != -1)
+            {
+                var ItemWindow = new AddItemWindow();
+                ItemWindow.Show();
+                ItemWindow.OpenWithItemSelected(currentItem);
+            }
+            else SetEditButtons(false);
         }
         private void BtnDayUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -132,9 +145,8 @@ namespace StockControl
         private void LstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateAttributes();
-            btnEditItem.IsEnabled = true;
+            SetEditButtons(true);
         }
-
         private void MenuBackup_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFile = new SaveFileDialog
@@ -143,15 +155,10 @@ namespace StockControl
                 Filter = "Stockout Backup Files (.stockout)|*.stockout",
                 DefaultExt = ".stockout"
             };
-            string backupFileName;
             bool? result = saveFile.ShowDialog();
             if (result == true)
-            {
-                backupFileName = saveFile.FileName;
-                HelperFunctions.Backup(folderPath, filePath, backupFileName);
-            }
+                HelperFunctions.Backup(folderPath, filePath, saveFile.FileName);
         }
-
         private void MenuRestore_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -171,10 +178,18 @@ namespace StockControl
             }
         }
 
+        private void MenuEditDay_Click(object sender, RoutedEventArgs e)
+        {
+            //Show the Day update Edit window
+            EditDayUpdate editDay = new EditDayUpdate();
+            editDay.Show();
+        }
+
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
             SaveItemsList();
         }
+
     }
 }
 

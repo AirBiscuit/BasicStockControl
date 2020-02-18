@@ -29,8 +29,8 @@
                 <MenuItem Header="_New Item" Click="BtnAddNewItem_Click"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="Edit existing item"/>
-                <MenuItem Header="Edit day update"/>
+                <MenuItem Header="Edit existing item" Name="hdrEditItem" IsEnabled="False" Click="BtnEditItem_Click"/>
+                <MenuItem Header="Edit day update" Click="MenuEditDay_Click"/>
             </MenuItem>
         </Menu>
 

@@ -42,13 +42,7 @@ namespace StockControl
             //Entries.Add(new GridEntry("Window Cleaner", DateTime.Today, 5));
             //Entries.Add(new GridEntry("Blue Roll", DateTime.Today, 5));
         }
-
-        private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        private void BtnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             //Add to the datagrid
             int.TryParse(txtQuantity.Text, out int quan);
@@ -67,7 +61,7 @@ namespace StockControl
             txtQuantity.SelectAll();
         }
 
-        private void txtQuantity_GotMouseCapture(object sender, MouseEventArgs e)
+        private void TxtQuantity_GotMouseCapture(object sender, MouseEventArgs e)
         {
             txtQuantity.SelectAll();
         }
@@ -102,6 +96,7 @@ namespace StockControl
                     File.WriteAllText(file, outputJSON);
             }
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
     }
 }

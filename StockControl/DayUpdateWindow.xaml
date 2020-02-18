@@ -18,17 +18,17 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Margin="30" Grid.RowSpan="2">
-            <Calendar x:Name="calendar" SelectionMode="SingleDate" SelectedDatesChanged="calendar_SelectedDatesChanged" Margin="0,5"/>
+            <Calendar x:Name="calendar" SelectionMode="SingleDate" Margin="0,5"/>
             <ComboBox x:Name="cboxItemName" FontSize="20" Margin="0,5"/>
             <DockPanel Margin="0,5">
                 <TextBlock Text="Quantity" Margin="0,0,10,0" FontSize="20" DockPanel.Dock="Left"/>
-                <TextBox x:Name="txtQuantity"  FontSize="20" DockPanel.Dock="Right" GotFocus="TxtQuantity_GotFocus" GotMouseCapture="txtQuantity_GotMouseCapture"/>
+                <TextBox x:Name="txtQuantity"  FontSize="20" DockPanel.Dock="Right" GotFocus="TxtQuantity_GotFocus" GotMouseCapture="TxtQuantity_GotMouseCapture"/>
             </DockPanel>
             <ComboBox x:Name="cboxIncoming" Margin="0,5" FontSize="20" SelectedIndex="0">
                 <ComboBoxItem>Outgoing</ComboBoxItem>
                 <ComboBoxItem>Incoming</ComboBoxItem>
             </ComboBox>
-            <Button x:Name="btnAddUpdate" Margin="0,5" Content="Add to list" Padding="5" FontSize="20" Click="btnAddUpdate_Click"/>
+            <Button x:Name="btnAddUpdate" Margin="0,5" Content="Add to list" Padding="5" FontSize="20" Click="BtnAddUpdate_Click"/>
 
         </StackPanel>
         <DataGrid Grid.Column="1" Margin="0,30,30,10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}">

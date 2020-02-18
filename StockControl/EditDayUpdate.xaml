@@ -1,0 +1,63 @@
+﻿<Window x:Class="StockControl.EditDayUpdate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StockControl"
+        mc:Ignorable="d"
+        Title="EditDayUpdate" Height="450" Width="800" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Text="Select Day:" Margin="10,10,10,0" x:Name="txtDay" FontSize="20" TextWrapping="Wrap"/>
+            <Calendar x:Name="cdrSelectedDay" SelectedDatesChanged="CdrSelectedDay_SelectedDatesChanged"/>
+            <Button x:Name="btnAdd" Content="Add Another Item" Click="BtnAdd_Click" FontSize="20" Margin="10,5" Padding="5">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFDDDDDD" Offset="0.75"/>
+                        <GradientStop Color="#FF9AFF9F" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btnDelAll" Content="Delete This Day" Click="BtnDelAll_Click" FontSize="20" Margin="10" Padding="5">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFDDDDDD" Offset="0.811"/>
+                        <GradientStop Color="Red" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btnDelEntry" Content="Delete This Item" Click="BtnDelEntry_Click" FontSize="20" Margin="10,5" Padding="5" IsEnabled="False" >
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFDDDDDD" Offset="0.678"/>
+                        <GradientStop Color="#FFFF8A8A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Button x:Name="btnFinish" Content="Finish Editing" Click="BtnFinish_Click" FontSize="20" Margin="10" Padding="5" Foreground="White" BorderBrush="Lime" IsEnabled="False">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFDDDDDD" Offset="0"/>
+                        <GradientStop Color="#FF1BA000" Offset="0.231"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        <DataGrid Grid.Column="1" Margin="10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectedCellsChanged="GrdList_SelectedCellsChanged" CellEditEnding="GrdList_CellEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*"/>
+                <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="3*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                <DataGridCheckBoxColumn Header="Delete" Width="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

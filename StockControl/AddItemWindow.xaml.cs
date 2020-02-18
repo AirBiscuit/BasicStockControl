@@ -19,7 +19,7 @@ namespace StockControl
     {
         readonly string[] Colourlist;
         bool isEdit = false;
-        MainWindow main;
+        readonly MainWindow main;
         public AddItemWindow()
         {
             InitializeComponent();

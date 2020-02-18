@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Windows;
 
 namespace StockControl
 {
@@ -16,6 +18,11 @@ namespace StockControl
             Items = products;
             DayUpdates = days;
         }
+    }
+    public enum ListType
+    {
+        ItemList,
+        GridEntryList
     }
     public static class HelperFunctions
     {
@@ -61,28 +68,30 @@ namespace StockControl
             }
             else throw new Exception("No output path has been selected for backup file");
         }
+
         /// <summary>
         /// Provides a struct with a list of Items and Dayupdates, read from backupFilePath
         /// </summary>
-        /// <param name="backupFilePath">The path of the .stockout file to read the backup from</param>
-        /// <returns></returns>
-        public static Backup Restore(string backupFilePath, string rootDirectory)
+        /// <param name="BackupFilePath">The path to the .stockout file</param>
+        /// <param name="RootDirectory">The path to the root directory into which the backed up files will be restored</param>
+        /// <returns>The struct with the lists of data</returns>
+        public static Backup Restore(string BackupFilePath, string RootDirectory)
         {
             string plainText;
-            List<Item> i = new List<Item>();
-            List<GridEntry> d = new List<GridEntry>();
+            List<Item> i;
+            List<GridEntry> d;
             Backup b = new Backup();
-            if (File.Exists(backupFilePath))
+            if (File.Exists(BackupFilePath))
             {
-                plainText = File.ReadAllText(backupFilePath);
+                plainText = File.ReadAllText(BackupFilePath);
                 string[] lists = plainText.Split('®');
                 i = JsonConvert.DeserializeObject<List<Item>>(lists[0]);
                 d = JsonConvert.DeserializeObject<List<GridEntry>>(lists[1]);
                 b.Items = i;
                 b.DayUpdates = d;
-                SaveRestoredDayUpdates(d, rootDirectory);
+                SaveRestoredDayUpdates(d, RootDirectory);
                 string itemsJSON = JsonConvert.SerializeObject(b.Items, Formatting.Indented);
-                File.WriteAllText(rootDirectory + "Items.json", itemsJSON);
+                File.WriteAllText(RootDirectory + "Items.json", itemsJSON);
             }
             return b;
         }
@@ -114,6 +123,94 @@ namespace StockControl
                 if (!string.IsNullOrEmpty(outputJSON))
                     File.WriteAllText(file, outputJSON);
             }
+        }
+        public static List<Item> OpenItemsJson()
+        {
+            string path = string.Format("{0}\\StBrendansStock\\Items.json", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            return JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText(path));
+        }
+        public static List<Item> OpenItemsJson(string FilePath)
+        {
+            return JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText(FilePath));
+        }
+        public static List<GridEntry> OpenDayUpdateJson(string FilePath)
+        {
+            return JsonConvert.DeserializeObject<List<GridEntry>>(File.ReadAllText(FilePath));
+        }
+        public static List<GridEntry> OpenDayUpdateJson(DateTime Day)
+        {
+            string path = GetPathFromDay(Day);
+            if (File.Exists(path))
+                return JsonConvert.DeserializeObject<List<GridEntry>>(File.ReadAllText(path));
+            else return null;
+        }
+        public static string GetPathFromDay(DateTime Day)
+        {
+            string path = string.Format("{0}\\StBrendansStock\\{1}\\{2}\\{3}.json",
+                                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Day.Year, Day.Month, Day.Day);
+            return path;
+        }
+        public static void SaveDayUpdateJson(List<GridEntry> newDayUpdate, DateTime Day)
+        {
+            var main = Application.Current.MainWindow as MainWindow;
+            var oldDayUpdate = OpenDayUpdateJson(Day);
+            //Save all the days into seperate files
+            //Directory by year, month
+
+            List<DateTime> dates = new List<DateTime>();
+
+            var changes = newDayUpdate.Except(oldDayUpdate);
+            foreach (GridEntry item in changes)
+            {
+                for (int i = 0; i < oldDayUpdate.Count; i++)
+                {
+                    if (item.ItemName == oldDayUpdate[i].ItemName)
+                    {
+                        oldDayUpdate[i] = item;
+                    }
+                }
+            }
+            List<GridEntry> outputUpdate = oldDayUpdate;
+            foreach (GridEntry item in outputUpdate)
+            {
+                if (!dates.Contains(item.Date))
+                    dates.Add(item.Date);
+                main.UpdateQuantity(item, item.Quantity);
+            }
+            foreach (DateTime date in dates)
+            {
+                /* If Dates has more than one entry, that means the Date of a GridEntry has been changed while editing.
+                 * When this happens, multiple DayUpdate files now need to be read, changes compred, then all overwritten including
+                 * the old data that wasn't changed this time.
+                 * 
+                 * Example: There are 2 Dayupdates: 16th and 17th of Feb.
+                 * DU16: Toilet Roll|-6
+                 * DU17: Toilet Roll|-9, Air Freshener|-1, Gloves Large|-4
+                 * 
+                 * The DayUpdate for 17th Feb is Changed, the Toilet Roll GridEntry has its date changed to the 16th.
+                 * The 17th is completely overwritten with all the Items in newDayUpdate that have a matching date because it
+                 * was opened at the start of this function. DU17 is now as follows:
+                 * DU17: Air Freshener|-1, Gloves Large|-4
+                 * This is serialised to JSON and written to a file, all fine.
+                 * 
+                 * Next, we need to 
+                 * 1. find any entries with a new date
+                 * 2. Open the Dayupdate file for that date
+                 * 3. 
+                 */
+                for (int i = 0; i < newDayUpdate.Count; i++)
+                {
+                    if (newDayUpdate[i].Date == date)
+                        outputUpdate.Add(newDayUpdate[i]);
+                }
+                string outputJSON = JsonConvert.SerializeObject(outputUpdate, Formatting.Indented);
+                if (!string.IsNullOrEmpty(outputJSON))
+                    File.WriteAllText(GetPathFromDay(Day), outputJSON);
+            }
+        }
+        public static void DeleteDayUpdate(DateTime Day)
+        {
+            File.Delete(GetPathFromDay(Day));
         }
     }
 }
