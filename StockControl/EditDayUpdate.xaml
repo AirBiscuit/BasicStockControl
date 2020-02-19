@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockControl"
         mc:Ignorable="d"
-        Title="EditDayUpdate" Height="450" Width="800" Closing="Window_Closing">
+        Title="Edit Day Update" Height="450" Width="800" Closing="Window_Closing" Icon="Icon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -53,12 +53,15 @@
                 </Button.Background>
             </Button>
         </StackPanel>
-        <DataGrid Grid.Column="1" Margin="10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectedCellsChanged="GrdList_SelectedCellsChanged" CellEditEnding="GrdList_CellEditEnding">
+        <DataGrid Grid.Column="1" Margin="10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectedCellsChanged="GrdList_SelectedCellsChanged" CellEditEnding="GrdList_CellEditEnding" SelectionMode="Single" SelectionUnit="Cell">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="3*"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, ValidatesOnExceptions=True}" Width="*"/>
             </DataGrid.Columns>
+            <DataGrid.RowValidationRules>
+                <local:StockValidationRule ValidationStep="UpdatedValue"/>
+            </DataGrid.RowValidationRules>
         </DataGrid>
     </Grid>
 </Window>

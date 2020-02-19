@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StockControl"
         mc:Ignorable="d"
         Icon="Icon.ico"
-        Title="DayUpdateWindow" Height="550" Width="800">
+        Title="New Day Update" Height="550" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

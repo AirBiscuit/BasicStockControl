@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
 using System.IO;
+using System.Globalization;
 
 namespace StockControl
 {
@@ -21,7 +22,7 @@ namespace StockControl
     public partial class EditDayUpdate : Window
     {
         public ObservableCollection<GridEntry> Entries, oldEntries;
-        MainWindow main;
+        readonly MainWindow main;
         DateTime selected;
         public EditDayUpdate()
         {
@@ -54,6 +55,8 @@ namespace StockControl
                     grdList.DataContext = Entries;
                     btnDelAll.IsEnabled = true;
                     btnAdd.IsEnabled = true;
+                    grdList.CanUserAddRows = true;
+                    grdList.CanUserDeleteRows = true;
                 }
                 else
                 {
@@ -62,7 +65,9 @@ namespace StockControl
                     Entries = new ObservableCollection<GridEntry>();
                     grdList.DataContext = Entries;
                     btnDelAll.IsEnabled = false;
-                    btnAdd.IsEnabled = true;
+                    btnAdd.IsEnabled = false;
+                    grdList.CanUserAddRows = false;
+                    grdList.CanUserDeleteRows = false;
                 }
 
             }
@@ -77,6 +82,7 @@ namespace StockControl
         private void BtnFinish_Click(object sender, RoutedEventArgs e)
         {
             HelperFunctions.SaveDayUpdateJson(Entries.ToList<GridEntry>(), (DateTime)cdrSelectedDay.SelectedDate);
+            //Figure out how much of a difference to apply to main.ItemsList
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -126,7 +132,42 @@ namespace StockControl
 
         private void GrdList_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            btnFinish.IsEnabled = true;
+            //Extra Validation is needed here: Quantity must be a number, and Name has to correspond to an item name
+            //otherwise reject the edit
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                btnFinish.IsEnabled = true;
+            }
+            else if (e.EditAction == DataGridEditAction.Cancel)
+            {
+                btnFinish.IsEnabled = false;
+            }
         }
+    }
+    public class StockValidationRule : ValidationRule
+    {
+        MainWindow main;
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            main = Application.Current.MainWindow as MainWindow;
+            List<Item> validItemNames = main.ItemsList.ToList<Item>();
+            string name = (value as BindingGroup).Items[0].ToString();
+            Item result;
+            try
+            {
+                result = validItemNames.First(x => x.Name == name);
+            }
+            catch (InvalidOperationException)
+            {
+                result = new Item();
+            }
+
+            if (result.Name == name)
+            {
+                return ValidationResult.ValidResult;
+            }
+            else return new ValidationResult(false, "Item must already exist");
+        }
+       
     }
 }
