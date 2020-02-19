@@ -24,9 +24,14 @@ namespace StockControl
         public ObservableCollection<GridEntry> Entries, oldEntries;
         readonly MainWindow main;
         DateTime selected;
+        bool isValid = false;
+
+        public bool IsValid { get => isValid; set => isValid = value; }
+
         public EditDayUpdate()
         {
             InitializeComponent();
+            IsValid = true;
             main = Application.Current.MainWindow as MainWindow;
             Entries = new ObservableCollection<GridEntry>();
             grdList.DataContext = Entries;
@@ -92,7 +97,8 @@ namespace StockControl
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            btnFinish.IsEnabled = true;
+            //TODO: Either work on manually adding a new item to the DataContext or Enable adding a new row directly in the datagrid.
+            //btnFinish.IsEnabled = true;
         }
 
         private void BtnDelEntry_Click(object sender, RoutedEventArgs e)
@@ -105,6 +111,7 @@ namespace StockControl
 
         private void BtnDelAll_Click(object sender, RoutedEventArgs e)
         {
+            //DONE
             //Delete the file altogether
 
             //Get the path
@@ -127,6 +134,7 @@ namespace StockControl
 
         private void GrdList_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            //TODO: Disable the button if the calendar loses selection.
             btnDelEntry.IsEnabled = true;
         }
 
@@ -134,15 +142,16 @@ namespace StockControl
         {
             //Extra Validation is needed here: Quantity must be a number, and Name has to correspond to an item name
             //otherwise reject the edit
-            if (e.EditAction == DataGridEditAction.Commit)
+
+            if (e.Column.Header.ToString() == "Quantity")
             {
-                btnFinish.IsEnabled = true;
+                IsValid = int.TryParse((e.EditingElement as TextBox).Text, out int quan);
+                btnFinish.IsEnabled = IsValid;
             }
-            else if (e.EditAction == DataGridEditAction.Cancel)
-            {
-                btnFinish.IsEnabled = false;
-            }
+            else
+                btnFinish.IsEnabled = IsValid;
         }
+
     }
     public class StockValidationRule : ValidationRule
     {
@@ -150,6 +159,7 @@ namespace StockControl
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             main = Application.Current.MainWindow as MainWindow;
+            EditDayUpdate window = Application.Current.Windows.OfType<EditDayUpdate>().FirstOrDefault();
             List<Item> validItemNames = main.ItemsList.ToList<Item>();
             string name = (value as BindingGroup).Items[0].ToString();
             Item result;
@@ -164,10 +174,15 @@ namespace StockControl
 
             if (result.Name == name)
             {
+                //TODO: Put this into a SetValid method which also handles the Finish button
+                window.IsValid = true;
                 return ValidationResult.ValidResult;
             }
-            else return new ValidationResult(false, "Item must already exist");
+            else
+            {
+                window.IsValid = false;
+                return new ValidationResult(false, "Item must already exist");
+            }
         }
-       
     }
 }
