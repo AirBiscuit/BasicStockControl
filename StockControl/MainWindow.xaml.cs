@@ -38,12 +38,14 @@ namespace StockControl
             lstItems.DataContext = ItemsList;
             lstItems.Columns[0].SortDirection = System.ComponentModel.ListSortDirection.Ascending;
         }
+        #region My Methods
         private void SetPaths()
         {
             folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\StBrendansStock";
             Directory.CreateDirectory(folderPath);
             filePath = folderPath + "\\Items.json";
-        }
+        }  
+
         /// <summary>
         /// Refresh the attributes pane with the selected Item's details
         /// </summary>
@@ -64,6 +66,7 @@ namespace StockControl
                 lstAttributes.Items.Add("Categories: " + cats);
             else lstAttributes.Items.Add("Categories: None");
         }
+
         /// <summary>
         /// Load the items saved in Items.json into a C# List
         /// </summary>
@@ -79,6 +82,7 @@ namespace StockControl
             }
             return i;
         }
+
         /// <summary>
         /// Save the current list of items into Items.json
         /// </summary>
@@ -88,6 +92,7 @@ namespace StockControl
             File.WriteAllText(filePath, outputJSON);
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
         /// <summary>
         /// Add or subtract the specified amount from the item at a specific position in the list.
         /// </summary>
@@ -103,21 +108,46 @@ namespace StockControl
             ItemsList[Index].Quantity += QuantityChange;
             RefreshList();
         }
+
         public void UpdateQuantity(GridEntry ChangedItem, int QuantityChange)
         {
             ItemsList.First(x => x.Name == ChangedItem.ItemName).Quantity += QuantityChange;
             RefreshList();
         }
+
         public void RefreshList()
         {
             lstItems.ItemsSource = null;
             lstItems.ItemsSource = ItemsList;
         }
+
         void SetEditButtons(bool enabled)
         {
             btnEditItem.IsEnabled = enabled;
             hdrEditItem.IsEnabled = enabled;
         }
+
+        /// <summary>
+        /// Allow the DataGrid to be directly edited to allow manual corrections
+        /// </summary>
+        /// <param name="isEditingEnabled">Is the DataGrid allowed to be manipulated?</param>
+        void ToggleDataEditing(bool isEditingEnabled)
+        {
+            if (isEditingEnabled)
+            {
+                lstItems.Columns[3].IsReadOnly = false;
+                btnCorrect.Visibility = Visibility.Visible;
+                btnDayUpdate.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                lstItems.Columns[3].IsReadOnly = true;
+                btnCorrect.Visibility = Visibility.Hidden;
+                btnDayUpdate.Visibility = Visibility.Visible;
+            }
+        }
+        #endregion
+        #region Events
         private void BtnAddNewItem_Click(object sender, RoutedEventArgs e)
         {
             //Open the new item UI
@@ -185,11 +215,21 @@ namespace StockControl
             editDay.Show();
         }
 
+        private void MenuCorrect_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleDataEditing(true);
+        }
+
+        private void BtnCorrect_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleDataEditing(false);
+        }
+
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
             SaveItemsList();
         }
-
+        #endregion
     }
 }
 

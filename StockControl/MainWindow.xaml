@@ -31,6 +31,7 @@
             <MenuItem Header="_Edit">
                 <MenuItem Header="Edit existing item" Name="hdrEditItem" IsEnabled="False" Click="BtnEditItem_Click"/>
                 <MenuItem Header="Edit day update" Click="MenuEditDay_Click"/>
+                <MenuItem Header="Manually correct Quantities" Click="MenuCorrect_Click"/>
             </MenuItem>
         </Menu>
 
@@ -40,6 +41,7 @@
         </DockPanel>
 
         <Button x:Name="btnDayUpdate" Content="Update Stock Levels" Click="BtnDayUpdate_Click" Grid.Column="1" Grid.Row="1" Margin="10,5" FontSize="16"/>
+        <Button x:Name="btnCorrect" Content="Finish Correcting Items" Click="BtnCorrect_Click" Grid.Column="1" Grid.Row="1" Margin="10,5" FontSize="16" Visibility="Hidden"/>
         <DataGrid x:Name="lstItems" Grid.Row="2" Grid.Column="1" CanUserAddRows="False" HeadersVisibility="Column" Margin="10" ItemsSource="{Binding }" AutoGenerateColumns="False" SelectionChanged="LstItems_SelectionChanged" FontSize="16">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="15*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
