@@ -144,6 +144,11 @@ namespace StockControl
                 return JsonConvert.DeserializeObject<List<GridEntry>>(File.ReadAllText(path));
             else return null;
         }
+        /// <summary>
+        /// Returns a path to a particular DayUpdate JSON file on the selected day
+        /// </summary>
+        /// <param name="Day">Day to find</param>
+        /// <returns>Returns a path to a particular DayUpdate JSON file on the selected day</returns>
         public static string GetPathFromDay(DateTime Day)
         {
             string path = string.Format("{0}\\StBrendansStock\\{1}\\{2}\\{3}.json",

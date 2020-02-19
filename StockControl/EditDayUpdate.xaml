@@ -16,8 +16,10 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <TextBlock Text="Select Day:" Margin="10,10,10,0" x:Name="txtDay" FontSize="20" TextWrapping="Wrap"/>
-            <Calendar x:Name="cdrSelectedDay" SelectedDatesChanged="CdrSelectedDay_SelectedDatesChanged"/>
-            <Button x:Name="btnAdd" Content="Add Another Item" Click="BtnAdd_Click" FontSize="20" Margin="10,5" Padding="5">
+            <Calendar x:Name="cdrSelectedDay" SelectedDatesChanged="CdrSelectedDay_SelectedDatesChanged">
+       
+            </Calendar>
+            <Button x:Name="btnAdd" Content="Add Another Item" Click="BtnAdd_Click" FontSize="20" Margin="10,5" Padding="5" IsEnabled="False">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFDDDDDD" Offset="0.75"/>
@@ -25,7 +27,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button x:Name="btnDelAll" Content="Delete This Day" Click="BtnDelAll_Click" FontSize="20" Margin="10" Padding="5">
+            <Button x:Name="btnDelAll" Content="Delete This Day" Click="BtnDelAll_Click" FontSize="20" Margin="10" Padding="5" IsEnabled="False">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFDDDDDD" Offset="0.811"/>
@@ -56,7 +58,6 @@
                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*"/>
                 <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="3*"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
-                <DataGridCheckBoxColumn Header="Delete" Width="50"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

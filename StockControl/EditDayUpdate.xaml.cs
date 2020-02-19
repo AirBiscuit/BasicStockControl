@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.IO;
 
 namespace StockControl
 {
@@ -21,6 +22,7 @@ namespace StockControl
     {
         public ObservableCollection<GridEntry> Entries, oldEntries;
         MainWindow main;
+        DateTime selected;
         public EditDayUpdate()
         {
             InitializeComponent();
@@ -41,34 +43,39 @@ namespace StockControl
             //Ignore events where the day is entirely unselected
             if (cdrSelectedDay.SelectedDate.HasValue)
             {
-                DateTime selected;
                 selected = cdrSelectedDay.SelectedDate.GetValueOrDefault();
                 var daysEntries = HelperFunctions.OpenDayUpdateJson(selected);
                 if (daysEntries != null)
                 {
+                    txtDay.Foreground = new SolidColorBrush(Colors.Green);
+                    txtDay.Text = string.Format("{0} selected", selected.ToShortDateString());
                     Entries = new ObservableCollection<GridEntry>(daysEntries);
                     oldEntries = Entries;
                     grdList.DataContext = Entries;
-                    btnDelEntry.IsEnabled = true;
+                    btnDelAll.IsEnabled = true;
+                    btnAdd.IsEnabled = true;
                 }
                 else
                 {
+                    txtDay.Foreground = new SolidColorBrush(Colors.Red);
+                    txtDay.Text = "No Entries this day";
                     Entries = new ObservableCollection<GridEntry>();
                     grdList.DataContext = Entries;
-                    btnDelEntry.IsEnabled = false;
+                    btnDelAll.IsEnabled = false;
+                    btnAdd.IsEnabled = true;
                 }
 
+            }
+            else
+            {
+                txtDay.Foreground = new SolidColorBrush(Colors.Black);
+                txtDay.Text = "Select Day:";
             }
 
         }
 
         private void BtnFinish_Click(object sender, RoutedEventArgs e)
         {
-
-            //foreach (DataGridRow row in grdList.)
-            //{
-
-            //}
             HelperFunctions.SaveDayUpdateJson(Entries.ToList<GridEntry>(), (DateTime)cdrSelectedDay.SelectedDate);
         }
 
@@ -85,11 +92,31 @@ namespace StockControl
         private void BtnDelEntry_Click(object sender, RoutedEventArgs e)
         {
             btnFinish.IsEnabled = true;
+            Entries.RemoveAt(grdList.SelectedIndex);
+            grdList.SelectedIndex = -1;
+            btnDelEntry.IsEnabled = false;
         }
 
         private void BtnDelAll_Click(object sender, RoutedEventArgs e)
         {
+            //Delete the file altogether
 
+            //Get the path
+            string pathToFile = HelperFunctions.GetPathFromDay(selected);
+            //Double check the user intended to do this
+            var result = MessageBox.Show("Are you sure you want to permanently delete this day?", "Delete Day?",
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            //If they did, proceed.     If they didn't, instead do nothing.
+            if (result == MessageBoxResult.Yes)
+            {
+                if (File.Exists(pathToFile))
+                {
+                    File.Delete(pathToFile);
+                    MessageBox.Show("Day Update Deleted Successfully", "File deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else MessageBox.Show("This day is already deleted, or doesn't exist", "File not found", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
         }
 
         private void GrdList_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
