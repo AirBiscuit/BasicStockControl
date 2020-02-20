@@ -35,12 +35,6 @@ namespace StockControl
             cboxItemName.SelectedIndex = 0;
             txtQuantity.Text = "1";
             grdList.DataContext = Entries;
-
-
-            //TEST DATA
-            //Entries.Add(new GridEntry("Toilet Roll", DateTime.Today, 5));
-            //Entries.Add(new GridEntry("Window Cleaner", DateTime.Today, 5));
-            //Entries.Add(new GridEntry("Blue Roll", DateTime.Today, 5));
         }
         private void BtnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +47,6 @@ namespace StockControl
             DateTime d = (DateTime)calendar.SelectedDate;
             Entries.Add(new GridEntry(cboxItemName.Text, d, quan));
             grdList.DataContext = Entries;
-            //Update the quantity of the item on the main page
         }
 
         private void TxtQuantity_GotFocus(object sender, RoutedEventArgs e)
@@ -97,6 +90,26 @@ namespace StockControl
             }
             MessageBox.Show("Save complete", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
+        }
+
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Load an existing file if there is one
+
+            //TODO: Make the loaded entries not count towards the new quantities in BtnFinish_Click()
+            var selected = calendar.SelectedDate;
+            if (selected != null)
+            {
+                if (File.Exists(HelperFunctions.GetPathFromDay(selected.GetValueOrDefault())))
+                {
+                    foreach (var entry in HelperFunctions.OpenDayUpdateJson(HelperFunctions.GetPathFromDay(selected.GetValueOrDefault())))
+                    {
+                        Entries.Add(entry);
+                    }
+                }
+
+            }
+
         }
     }
 }
