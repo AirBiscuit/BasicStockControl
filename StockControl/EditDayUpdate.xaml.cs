@@ -35,7 +35,7 @@ namespace StockControl
             main = Application.Current.MainWindow as MainWindow;
             Entries = new ObservableCollection<GridEntry>();
             grdList.DataContext = Entries;
-            //Go through the folder of the calendar's current month, find all .json files
+            //Open today's edit if it exists
             cdrSelectedDay.SelectedDate = DateTime.Today;
 
             //Fill the combobox with existing day updates
@@ -87,7 +87,7 @@ namespace StockControl
         private void BtnFinish_Click(object sender, RoutedEventArgs e)
         {
             HelperFunctions.SaveDayUpdateJson(Entries.ToList<GridEntry>(), (DateTime)cdrSelectedDay.SelectedDate);
-            //Figure out how much of a difference to apply to main.ItemsList
+            //TODO: Figure out how much of a difference to apply to main.ItemsList
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -98,7 +98,14 @@ namespace StockControl
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Either work on manually adding a new item to the DataContext or Enable adding a new row directly in the datagrid.
-            //btnFinish.IsEnabled = true;
+            
+            SetValid(true);
+        }
+
+        public void SetValid(bool isValid)
+        {
+            IsValid = isValid;
+            btnFinish.IsEnabled = isValid;
         }
 
         private void BtnDelEntry_Click(object sender, RoutedEventArgs e)
@@ -111,9 +118,7 @@ namespace StockControl
 
         private void BtnDelAll_Click(object sender, RoutedEventArgs e)
         {
-            //DONE
             //Delete the file altogether
-
             //Get the path
             string pathToFile = HelperFunctions.GetPathFromDay(selected);
             //Double check the user intended to do this
@@ -135,6 +140,10 @@ namespace StockControl
         private void GrdList_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             //TODO: Disable the button if the calendar loses selection.
+            if (cdrSelectedDay.SelectedDate != null)
+            {
+
+            }
             btnDelEntry.IsEnabled = true;
         }
 
@@ -142,14 +151,10 @@ namespace StockControl
         {
             //Extra Validation is needed here: Quantity must be a number, and Name has to correspond to an item name
             //otherwise reject the edit
+            //Update: only the quantity needs validation here, the text is checked seperately
 
             if (e.Column.Header.ToString() == "Quantity")
-            {
-                IsValid = int.TryParse((e.EditingElement as TextBox).Text, out int quan);
-                btnFinish.IsEnabled = IsValid;
-            }
-            else
-                btnFinish.IsEnabled = IsValid;
+                SetValid(int.TryParse((e.EditingElement as TextBox).Text, out _));
         }
 
     }
@@ -175,12 +180,12 @@ namespace StockControl
             if (result.Name == name)
             {
                 //TODO: Put this into a SetValid method which also handles the Finish button
-                window.IsValid = true;
+                window.SetValid(true);
                 return ValidationResult.ValidResult;
             }
             else
             {
-                window.IsValid = false;
+                window.SetValid(false);
                 return new ValidationResult(false, "Item must already exist");
             }
         }

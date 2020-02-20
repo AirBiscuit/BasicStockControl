@@ -53,7 +53,7 @@
                 </Button.Background>
             </Button>
         </StackPanel>
-        <DataGrid Grid.Column="1" Margin="10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectedCellsChanged="GrdList_SelectedCellsChanged" CellEditEnding="GrdList_CellEditEnding" SelectionMode="Single" SelectionUnit="Cell">
+        <DataGrid Grid.Column="1" Margin="10" x:Name="grdList" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectedCellsChanged="GrdList_SelectedCellsChanged" CellEditEnding="GrdList_CellEditEnding" SelectionMode="Single" SelectionUnit="Cell" AlternatingRowBackground="#FFEAEAEA">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat='dd MMM yyyy'}" Width="*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="3*"/>

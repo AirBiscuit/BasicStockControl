@@ -223,6 +223,8 @@ namespace StockControl
         private void BtnCorrect_Click(object sender, RoutedEventArgs e)
         {
             ToggleDataEditing(false);
+            //Save the List
+            SaveItemsList();
         }
 
         private void MenuSave_Click(object sender, RoutedEventArgs e)
