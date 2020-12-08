@@ -95,6 +95,33 @@ namespace StockControl
             }
             return b;
         }
+
+        public static Backup RestoreMonth(string BackupFilePath, DateTime selectedDate)
+        {
+            string plainText;
+            List<Item> i;
+            List<GridEntry> d;
+            Backup b = new Backup();
+            if (File.Exists(BackupFilePath))
+            {
+                plainText = File.ReadAllText(BackupFilePath);
+                string[] lists = plainText.Split('®');
+                i = JsonConvert.DeserializeObject<List<Item>>(lists[0]);
+                d = JsonConvert.DeserializeObject<List<GridEntry>>(lists[1]);
+                //for (int c = 0; c < d.Count; c++)
+                //{
+                //    if (d[c].Date.Month == selectedDate.Month)
+                //        filteredList.Add(d[c]);
+                //}
+
+                var filteredList = d.Where(x => x.Date.Month == selectedDate.Month).ToList();
+                //var brokenQuery = from matchingItem in d where matchingItem.Date.Month == selectedDate.Month select matchingItem;
+
+                b.Items = i;
+                b.DayUpdates = filteredList;
+            }
+            return b;
+        }
         public static void SaveRestoredDayUpdates(List<GridEntry> entries, string rootDirectory)
         {
             //Save all the days into seperate files

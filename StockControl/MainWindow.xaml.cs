@@ -227,6 +227,12 @@ namespace StockControl
             SaveItemsList();
         }
 
+        private void MenuExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExcelExport excel = new ExcelExport();
+            excel.Show();
+        }
+
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
             SaveItemsList();

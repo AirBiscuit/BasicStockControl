@@ -23,6 +23,7 @@
                 <MenuItem Header="_Save..." Name="menuSave" Click="MenuSave_Click"/>
                 <MenuItem Header="_Back up data" Name="MenuBackup" Click="MenuBackup_Click"/>
                 <MenuItem Header="_Restore data" Name="MenuRestore" Click="MenuRestore_Click"/>
+                <MenuItem Header="Export to Excel" Name="MenuExcel" Click="MenuExcel_Click"/>
             </MenuItem>
             <MenuItem Header="_New">
                 <MenuItem Header="_New Day Update"/>
